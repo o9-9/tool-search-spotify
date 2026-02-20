@@ -2,5 +2,8 @@
 node_modules
 bun.lock
 
+# compilation
+dist
+
 # mac conf
 .DS_Store

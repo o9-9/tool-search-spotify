@@ -1,6 +1,6 @@
 {
     "name": "searchtify",
-    "version": "1.4.0",
+    "version": "2.0.0",
     "author": {
         "name": "VillainsRule",
         "url": "https://github.com/VillainsRule"
@@ -11,7 +11,11 @@
     },
     "exports": {
         "./package.json": "./package.json",
-        ".": "./src/index.js"
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.mjs",
+            "require": "./dist/index.cjs"
+        }
     },
     "bugs": {
         "url": "https://github.com/VillainsRule/searchtify/issues"
@@ -19,7 +23,7 @@
     "description": "a search package for spotify that requires no credentials!",
     "files": [
         "package.json",
-        "src/**/*.js",
+        "dist/**/*",
         "README.md"
     ],
     "homepage": "https://github.com/VillainsRule/searchtify",
@@ -31,13 +35,16 @@
         "searchtify"
     ],
     "scripts": {
+        "build": "rm -rf dist/ && bun cli/build.ts && bunx --bun tsc",
         "doesitwork": "bun tests/does-it-work.js",
         "secrets": "bun secrets/scrape.ts"
     },
     "type": "module",
     "devDependencies": {
         "@types/bun": "^1.3.2",
+        "esbuild": "^0.27.3",
         "puppeteer-extra": "^3.3.6",
-        "puppeteer-extra-plugin-stealth": "^2.11.2"
+        "puppeteer-extra-plugin-stealth": "^2.11.2",
+        "typescript": "5"
     }
 }

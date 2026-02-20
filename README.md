@@ -9,6 +9,8 @@ the point of this package is NOT to provide some sort of "clean" API for spotify
 
 the point of this package is to provide a wrapper for spotify's complex API. they are constantly changing parameters and endpoints. it's actually kind of annoying.
 
+that being said, as of searchtify 2.0, it is typed! any modern IDE should give you suggestions that come directly from the API.
+
 <br><br><h2 align='center'>usage</h2>
 
 usage is relatively simple:
@@ -32,52 +34,25 @@ console.log(album);
 or, for example, an artist:
 
 ```js
-// uri format: spotify:artist:1Xyo4u8uXC1ZmMpatF05PJ
+// uri format: spotify:artist:1Xyo4u8uXC1ZmMpatF05PJ (my goat the weeknd)
 const artist = await spotify.getArtist(search.tracksV2.items[0].item.data.artists.items[0].uri);
 console.log(artist);
 ```
 
-`search` consists of:
-
-- `albumsV2`
-- `artists`
-- `audiobooks`
-- `chipOrder`
-  - this is not actual data, just the order of the tabs spotify puts on their bar
-- `episodes`
-- `genres`
-- `playlists`
-- `podcasts`
-- `topResultsV2`
-  - has a "featured" prop with an item array as well
-- `tracksV2`
-- `users`
-
-all of these consist of the following props:
-
-1. an array named `items` with various data related to the item
-2. a number named `totalCount` with the totals if you were to increase the limit
-
-searching also allows you to pass various search parameters:
+you can limit searches to X number of things PER CATEGORY, which in testing notably does not make any impact on response times:
 
 ```js
 const search2 = await spotify.search('Hurry Up Tomorrow', { limit: 25 });
 console.log(search2.tracksV2.items);
 ```
 
+that would return 25 albums, 25 songs, etc
+
 *notable* parameters include:
 
 - `limit` - number - the limit of results for each items array
 - `offset` - number - the offset to start at
 - `numberOfTopResults` - number - the number of items in `topResultsV2`
-
-there are also various boolean parameters that explain themselves:
-
-- `includeAudiobooks`
-- `includeArtistHasConcertsField`
-- `includePreReleases`
-- `includeLocalConcertsField`
-- `includeAuthors`
 
 if there's something you need from here, enable it as part of the search parameters
 
@@ -95,32 +70,7 @@ the structure of the response is the homepage categories and data going down.
 
 it defaults to the user's timezone.
 
-you can log in by specifying a `sp_dc` cookie in the `login` function. the cookie should be everything after the `sp_dc=` and everything before the semicolon (`;`).
-
-```js
-await spotify.login(`XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX`);
-```
-
-please put the cookie in a secure place, as it grants full access to your spotify account. the `login` function returns the result of the below `whoAmI` function:
-
-```js
-const iAm = await spotify.whoAmI();
-console.log('i am', iAm.name);
-```
-
-this tells you who the name of the account as well as some basic information (avatar, etc).
-
-you can use the synchronous `isLoggedIn` to find out if you're logged in:
-
-```js
-const isLoggedIn = spotify.isLoggedIn();
-if (isLoggedIn) console.log('hi, i am', (await spotify.whoAmI()).name);
-else console.log('i am not logged in :(');
-```
-
-this package may lead to your spotify account being banned. not my fault, use responsibly.
-
-you can also set a custom user agent using `setUserAgent`:
+you can set a custom user agent using `setUserAgent`:
 
 ```js
 spotify.setUserAgent('putting something like this in the useragent will probably flag your IP');
@@ -130,7 +80,9 @@ spotify.setUserAgent('putting something like this in the useragent will probably
 
 the secrets directory of this repository is code created by <a href='https://github.com/Thereallo1026'>Thereallo1026</a> (repository deleted)<br>
 the original proof of concept was created by <a href='https://github.com/misiektoja/spotify_monitor/blob/dev/debug/spotify_monitor_secret_grabber.py'>Michal Szymanski</a><br>
-thanks to both of you; y'all rock!
+the types come from <a href='https://github.com/NuclearPlayer'>NuclearPlayer</a>, which was created by <a href='https://github.com/nukeop'>nukeop</a><br><br>
+
+thanks to all of you; y'all rock!
 
 <br><br>
 <h5 align='center'>made with ❤️</h5>
