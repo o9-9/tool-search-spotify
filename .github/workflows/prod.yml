@@ -17,7 +17,14 @@ jobs:
         with:
           bun-version: latest
 
+      - name: install deps
+        run: bun install
+
+      - name: build package
+        run: bun run build
+
       - name: install npm
         run: bun install -g npm@latest
 
-      - run: npm publish
+      - name: publish package
+        run: npm publish
