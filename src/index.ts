@@ -201,6 +201,7 @@ class Spotify {
             console.error('1. ensure you have the latest version of searchtify installed');
             console.error('2. open an issue @ https://github.com/VillainsRule/searchtify');
             console.error('3. make sure to specify "error code 1" in the issue');
+            console.log(res);
             process.exit(1);
         }
 
